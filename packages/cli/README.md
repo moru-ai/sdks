@@ -10,6 +10,12 @@ This CLI tool allows you to build and manage your running Moru sandboxes and san
 brew install moru
 ```
 
+**Using the binary (no Node required)**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/moru-ai/sdks/main/install.sh | bash
+```
+
 **Using NPM**
 
 ```bash
