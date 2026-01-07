@@ -6,7 +6,7 @@ export default defineConfig({
     {
       name: 'hbs-raw',
       enforce: 'pre',
-      transform(code, id) {
+      transform(code: string, id: string) {
         if (id.endsWith('.hbs')) {
           return {
             code: `export default ${JSON.stringify(code)};`,
