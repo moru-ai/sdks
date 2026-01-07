@@ -130,9 +130,9 @@ echo "moru installed to $DEST"
 if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
   # Detect shell and appropriate config file
   SHELL_CONFIG=""
-  if [[ -n "$ZSH_VERSION" ]] || [[ "$SHELL" == *"zsh"* ]]; then
+  if [[ "$SHELL" == *"zsh"* ]]; then
     SHELL_CONFIG="$HOME/.zshrc"
-  elif [[ -n "$BASH_VERSION" ]] || [[ "$SHELL" == *"bash"* ]]; then
+  elif [[ "$SHELL" == *"bash"* ]]; then
     # Prefer .bash_profile on macOS, .bashrc on Linux
     if [[ "$OS" == "darwin" ]] && [[ -f "$HOME/.bash_profile" ]]; then
       SHELL_CONFIG="$HOME/.bash_profile"
