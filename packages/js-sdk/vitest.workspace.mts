@@ -64,6 +64,12 @@ export default defineWorkspace([
       globals: false,
       testTimeout: 300_000,
       environment: 'node',
+      maxConcurrency: 3,
+      poolOptions: {
+        threads: {
+          singleThread: true,
+        },
+      },
     },
   },
   {
