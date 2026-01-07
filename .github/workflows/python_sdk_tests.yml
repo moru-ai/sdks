@@ -59,6 +59,6 @@ jobs:
         run: poetry build
 
       - name: Run tests
-        run: poetry run pytest --verbose --numprocesses=4
+        run: poetry run pytest --verbose --numprocesses=1
         env:
           MORU_API_KEY: ${{ secrets.MORU_API_KEY }}
