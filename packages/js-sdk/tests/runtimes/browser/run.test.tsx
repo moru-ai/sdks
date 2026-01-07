@@ -1,3 +1,11 @@
+import { expect, test } from 'vitest'
+
+// TODO: This is a temporary dummy test to prevent "No test suite found" error
+// Remove this when the actual browser runtime tests below are enabled
+test('dummy browser test', () => {
+  expect(true).toBe(true)
+})
+
 // import { expect, inject, test } from 'vitest'
 // import { render } from 'vitest-browser-react'
 // import { waitFor } from '@testing-library/react'
