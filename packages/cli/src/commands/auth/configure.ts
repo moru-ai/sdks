@@ -22,7 +22,9 @@ export const configureCommand = new commander.Command('configure')
     console.log('Configuring user...\n')
 
     if (!fs.existsSync(USER_CONFIG_PATH)) {
-      console.log('No user config found, run `moru auth login` to log in first.')
+      console.log(
+        'No user config found, run `moru auth login` to log in first.'
+      )
       return
     }
 
