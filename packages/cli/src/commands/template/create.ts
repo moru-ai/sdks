@@ -163,7 +163,8 @@ sandbox = Sandbox.create("${templateName}")
 # Create async sandbox
 sandbox = await AsyncSandbox.create("${templateName}")`)
 
-        const typescriptExample = asTypescript(`import { Sandbox } from '@moru-ai/core'
+        const typescriptExample =
+          asTypescript(`import { Sandbox } from '@moru-ai/core'
 
 // Create sandbox
 const sandbox = await Sandbox.create('${templateName}')`)

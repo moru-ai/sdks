@@ -9,7 +9,9 @@ def test_internet_access_enabled(sandbox_factory):
     sbx = sandbox_factory(allow_internet_access=True)
 
     # Test internet connectivity by making a curl request to a reliable external site
-    result = sbx.commands.run("curl -s -o /dev/null -w '%{http_code}' https://google.com")
+    result = sbx.commands.run(
+        "curl -s -o /dev/null -w '%{http_code}' https://google.com"
+    )
     assert result.exit_code == 0
     assert result.stdout.strip() in ["200", "301"]
 

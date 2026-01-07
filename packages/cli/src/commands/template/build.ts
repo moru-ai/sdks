@@ -516,12 +516,13 @@ sandbox = await AsyncSandbox.create("${
           aliases?.length ? aliases[0] : template.templateID
         }")`)
 
-        const typescriptExample = asTypescript(`import { Sandbox } from '@moru-ai/core'
+        const typescriptExample =
+          asTypescript(`import { Sandbox } from '@moru-ai/core'
 
 // Create sandbox
 const sandbox = await Sandbox.create('${
-          aliases?.length ? aliases[0] : template.templateID
-        }')`)
+            aliases?.length ? aliases[0] : template.templateID
+          }')`)
 
         const examplesMessage = `You can now use the template to create custom sandboxes.\nLearn more on ${asPrimary(
           'https://moru.io/docs'

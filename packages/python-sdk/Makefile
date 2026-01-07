@@ -4,7 +4,7 @@ generate-api:
 	python $(ROOT_DIR)/spec/remove_extra_tags.py sandboxes templates
 	openapi-python-client generate --output-path $(ROOT_DIR)/packages/python-sdk/moru/api/api --overwrite --path $(ROOT_DIR)/spec/openapi_generated.yml
 	rm -rf moru/api/client
-	mv moru/api/api/moru_api_client moru/api/client
+	mv moru/api/api/moru_sandbox_api_client moru/api/client
 	rm -rf moru/api/api
 	ruff format .
 

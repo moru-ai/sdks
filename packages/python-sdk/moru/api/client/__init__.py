@@ -1,4 +1,4 @@
-"""A client library for accessing Moru API"""
+"""A client library for accessing Moru Sandbox API"""
 
 from .client import AuthenticatedClient, Client
 

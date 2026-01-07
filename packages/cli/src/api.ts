@@ -58,7 +58,9 @@ export function ensureAPIKey() {
 export function ensureUserConfig(): UserConfig {
   const userConfig = getUserConfig()
   if (!userConfig) {
-    console.error('No user config found, run `moru auth login` to log in first.')
+    console.error(
+      'No user config found, run `moru auth login` to log in first.'
+    )
     process.exit(1)
   }
   return userConfig

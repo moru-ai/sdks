@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: sdk-tests-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   test:
     defaults:
@@ -20,9 +24,10 @@ jobs:
         shell: bash
     name: Python SDK - Build and test (${{ matrix.os }})
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-22.04, windows-latest]
+      max-parallel: 1
+      fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
@@ -55,6 +60,6 @@ jobs:
         run: poetry build
 
       - name: Run tests
-        run: poetry run pytest --verbose --numprocesses=4
+        run: poetry run pytest --verbose --numprocesses=1
         env:
           MORU_API_KEY: ${{ secrets.MORU_API_KEY }}
