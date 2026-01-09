@@ -1,6 +1,6 @@
 {
   "name": "@moru-ai/cli",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "CLI for managing Moru sandbox templates",
   "homepage": "https://github.com/moru-ai/sdks",
   "license": "MIT",
