@@ -87,11 +87,11 @@ jobs:
         env:
           MORU_API_KEY: ${{ secrets.MORU_API_KEY }}
         run: |
-          # Determine binary path
+          # Determine binary path (VERSION="test" creates "moru-vtest-{target}" files)
           if [ "${{ runner.os }}" = "Windows" ]; then
-            BINARY="./dist/bin/moru-test-win-x64.exe"
+            BINARY="./dist/bin/moru-vtest-win-x64.exe"
           else
-            BINARY="./dist/bin/moru-test-linux-x64"
+            BINARY="./dist/bin/moru-vtest-linux-x64"
             chmod +x "$BINARY"
           fi
 
