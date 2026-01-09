@@ -13,8 +13,14 @@ export async function spawnConnectedTerminal(sandbox: moru.Sandbox) {
   // Clear local terminal emulator before starting terminal
   // process.stdout.write('\x1b[2J\x1b[0f')
 
-  process.stdin.setRawMode(true)
-  process.stdout.setEncoding('utf-8')
+  // Ensure stdin is a TTY before setting raw mode
+  if (typeof process.stdin.setRawMode === 'function') {
+    process.stdin.setRawMode(true)
+  }
+  // setEncoding is not supported in Bun runtime
+  if (typeof process.stdout.setEncoding === 'function') {
+    process.stdout.setEncoding('utf-8')
+  }
 
   const terminalSession = await sandbox.pty.create({
     onData: (data) => {
@@ -58,7 +64,9 @@ export async function spawnConnectedTerminal(sandbox: moru.Sandbox) {
     resizeListener.destroy()
     stdinListener.destroy()
     await inputQueue.stop()
-    process.stdin.setRawMode(false)
+    if (typeof process.stdin.setRawMode === 'function') {
+      process.stdin.setRawMode(false)
+    }
   }
 }
 
