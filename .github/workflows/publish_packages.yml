@@ -77,7 +77,7 @@ jobs:
       - name: Create new versions
         run: pnpm run version
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Release new versions
         uses: changesets/action@v1
@@ -85,7 +85,7 @@ jobs:
           publish: pnpm run publish
           createGithubReleases: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ""
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
@@ -100,4 +100,4 @@ jobs:
           git commit -am "[skip ci] Release new versions" || exit 0
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
