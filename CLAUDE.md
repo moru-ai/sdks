@@ -249,6 +249,8 @@ Use conventional commits:
 
 **Format:** `<type>(<scope>): <description>`
 
+**IMPORTANT: Always include the type prefix (feat, fix, chore, etc.) in commit messages. Never skip it.**
+
 **Types:**
 - `feat`: New feature (usually needs changeset)
 - `fix`: Bug fix (usually needs changeset)
