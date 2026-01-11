@@ -13,7 +13,7 @@
 
 ---
 
-Moru provides isolated cloud sandboxes for AI agents that need full computer access—like [Claude Agent SDK](https://docs.anthropic.com/en/docs/agents-and-tools/claude-agent-sdk)—to run commands, write files, and execute code.
+Moru provides isolated cloud sandboxes for AI agents that need full computer access—like [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview)—to run commands, write files, and execute code.
 
 ## Installation
 
