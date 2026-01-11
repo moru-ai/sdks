@@ -105,6 +105,14 @@ This monorepo contains:
 
 For more information, visit [moru.io/docs](https://moru.io/docs).
 
+## Examples
+
+- [Maru](https://github.com/moru-ai/maru) - General purpose AI agent using Claude Agent SDK and Moru
+
+## Related Repositories
+
+- [Sandbox Infrastructure](https://github.com/moru-ai/sandbox-infra) - Open-source Firecracker-based sandbox infrastructure
+
 ## Acknowledgement
 
 This project is a fork of [E2B](https://github.com/e2b-dev/E2B).
