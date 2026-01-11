@@ -292,7 +292,7 @@ Provide both:
 class Moru < Formula
   desc "CLI to manage Moru sandboxes and templates"
   homepage "https://moru.io"
-  url "https://github.com/moru-ai/sdks/archive/refs/tags/v0.1.0.tar.gz"
+  url "https://github.com/moru-ai/moru/archive/refs/tags/v0.1.0.tar.gz"
   sha256 "TBD"
   license "Apache-2.0"
 

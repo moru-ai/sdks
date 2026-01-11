@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="moru-ai/sdks"
+REPO="moru-ai/moru"
 INSTALL_DIR=""
 VERSION=""
 

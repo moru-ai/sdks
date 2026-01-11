@@ -12,7 +12,7 @@ The Moru CLI lets you build and manage cloud sandboxes directly from your termin
 No Node.js required. Works on Linux and macOS with automatic PATH configuration.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/moru-ai/sdks/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/moru-ai/moru/main/install.sh | bash
 ```
 
 ### Option 2: npm
@@ -173,7 +173,7 @@ exit
 
 - **Documentation:** [moru.io/docs](https://moru.io/docs)
 - **Command Help:** Run `moru <command> --help` for detailed options
-- **Issues:** [github.com/moru-ai/sdks/issues](https://github.com/moru-ai/sdks/issues)
+- **Issues:** [github.com/moru-ai/moru/issues](https://github.com/moru-ai/moru/issues)
 
 ## License
 

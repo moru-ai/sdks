@@ -2,16 +2,16 @@
   "name": "@moru-ai/core",
   "version": "0.1.0",
   "description": "Moru SDK that gives agents cloud environments",
-  "homepage": "https://github.com/moru-ai/sdks",
+  "homepage": "https://github.com/moru-ai/moru",
   "license": "MIT",
   "author": {
     "name": "Moru AI",
     "url": "https://github.com/moru-ai"
   },
-  "bugs": "https://github.com/moru-ai/sdks/issues",
+  "bugs": "https://github.com/moru-ai/moru/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/moru-ai/sdks",
+    "url": "https://github.com/moru-ai/moru",
     "directory": "packages/js-sdk"
   },
   "publishConfig": {
