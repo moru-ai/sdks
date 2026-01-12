@@ -15,6 +15,12 @@
 
 Moru provides isolated cloud sandboxes for AI agents that need full computer access—like [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview)—to run commands, write files, and execute code.
 
+## Examples
+
+See what you can build with Moru:
+
+- [Maru](https://github.com/moru-ai/maru) - A Claude Agent SDK example built with Moru sandboxes
+
 ## Quick Start
 
 ### 1. Create an Account
@@ -108,10 +114,6 @@ This monorepo contains:
 ## Documentation
 
 For more information, visit [moru.io/docs](https://moru.io/docs).
-
-## Examples
-
-- [Maru](https://github.com/moru-ai/maru) - General purpose AI agent using Claude Agent SDK and Moru
 
 ## Related Repositories
 
