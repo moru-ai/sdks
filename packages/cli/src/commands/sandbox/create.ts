@@ -85,6 +85,16 @@ export function createCommand(
           const sandbox = await moru.Sandbox.create(templateID, { apiKey })
           console.log(`Sandbox ${asPrimary(sandbox.sandboxId)} created`)
 
+          if (!isInteractive) {
+            // Show helpful example commands
+            console.log('')
+            console.log('Try:')
+            console.log(`  moru sandbox exec ${sandbox.sandboxId} echo "Hello World"`)
+            console.log(`  moru sandbox exec ${sandbox.sandboxId} -it`)
+            console.log(`  moru sandbox logs ${sandbox.sandboxId}`)
+            console.log(`  moru sandbox kill ${sandbox.sandboxId}`)
+          }
+
           if (isInteractive) {
             // Interactive mode: connect PTY, sandbox stays alive after exit
             // Keep-alive loop to prevent sandbox from timing out during interactive session
