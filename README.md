@@ -47,6 +47,22 @@ moru sandbox list
 moru sandbox logs <id>
 ```
 
+### Persistent Sandbox
+
+```bash
+# Create persistent sandbox
+moru sandbox create base
+
+# Write a file
+moru sandbox exec <id> 'sh -c "echo Hello Moru > /tmp/note.txt"'
+
+# Read it back (persisted!)
+moru sandbox exec <id> cat /tmp/note.txt
+
+# Clean up
+moru sandbox kill <id>
+```
+
 ## Using SDKs
 
 ### Install
