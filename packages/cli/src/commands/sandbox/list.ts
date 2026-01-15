@@ -71,32 +71,12 @@ function renderTable(runs: SandboxRun[], status?: SandboxRunStatus[]) {
     title: getStatusTitle(status),
     columns: [
       { name: 'sandboxID', alignment: 'left', title: 'Sandbox ID' },
-      {
-        name: 'templateID',
-        alignment: 'left',
-        title: 'Template ID',
-        maxLen: 20,
-      },
-      { name: 'alias', alignment: 'left', title: 'Alias' },
       { name: 'status', alignment: 'left', title: 'Status' },
+      { name: 'alias', alignment: 'left', title: 'Template Name' },
       { name: 'endReason', alignment: 'left', title: 'End Reason' },
       { name: 'createdAt', alignment: 'left', title: 'Started' },
       { name: 'endedAt', alignment: 'left', title: 'Ended' },
     ],
-    rows: runs
-      .map((run) => ({
-        ...run,
-        alias: run.alias || '-',
-        status: run.status.charAt(0).toUpperCase() + run.status.slice(1),
-        endReason: run.endReason || '-',
-        createdAt: new Date(run.createdAt).toLocaleString(),
-        endedAt: run.endedAt ? new Date(run.endedAt).toLocaleString() : '-',
-      }))
-      .sort(
-        (a, b) =>
-          b.createdAt.localeCompare(a.createdAt) ||
-          a.sandboxID.localeCompare(b.sandboxID)
-      ),
     style: {
       headerTop: {
         left: '',
@@ -122,6 +102,37 @@ function renderTable(runs: SandboxRun[], status?: SandboxRunStatus[]) {
       orange: '\x1b[38;5;216m',
     },
   })
+
+  const sortedRuns = runs
+    .map((run) => ({
+      ...run,
+      alias: run.alias || '-',
+      displayStatus: run.status.charAt(0).toUpperCase() + run.status.slice(1),
+      endReason: run.endReason || '-',
+      createdAt: new Date(run.createdAt).toLocaleString(),
+      endedAt: run.endedAt ? new Date(run.endedAt).toLocaleString() : '-',
+    }))
+    .sort(
+      (a, b) =>
+        b.createdAt.localeCompare(a.createdAt) ||
+        a.sandboxID.localeCompare(b.sandboxID)
+    )
+
+  for (const run of sortedRuns) {
+    const rowColor = run.status === 'running' ? 'green' : undefined
+    table.addRow(
+      {
+        sandboxID: run.sandboxID,
+        alias: run.alias,
+        status: run.displayStatus,
+        endReason: run.endReason,
+        createdAt: run.createdAt,
+        endedAt: run.endedAt,
+      },
+      { color: rowColor }
+    )
+  }
+
   table.printTable()
 
   process.stdout.write('\n')
