@@ -6,7 +6,7 @@ import * as boxen from 'boxen'
 import { cwdRelative } from './filesystem'
 import { UserConfig } from '../user'
 
-export const primaryColor = '#FFB766'
+export const primaryColor = '#00D1FF'
 
 export function asFormattedConfig(config: UserConfig) {
   const email = asBold(config.email)

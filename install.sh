@@ -13,14 +13,14 @@ if [[ -t 1 ]]; then
     MUTED='\033[0;2m'
     RED='\033[0;31m'
     GREEN='\033[0;32m'
-    ORANGE='\033[38;5;214m'
+    CYAN='\033[38;2;0;209;255m'
     BOLD='\033[1m'
     NC='\033[0m'
 else
     MUTED=''
     RED=''
     GREEN=''
-    ORANGE=''
+    CYAN=''
     BOLD=''
     NC=''
 fi
@@ -71,7 +71,7 @@ print_progress() {
     local bar_filled=$(printf "%${filled}s" | tr ' ' "$PROGRESS_FILLED")
     local bar_empty=$(printf "%${empty}s" | tr ' ' "$PROGRESS_EMPTY")
 
-    printf "\r      ${ORANGE}%s%s${NC} %3d%%" "$bar_filled" "$bar_empty" "$percent" >&4
+    printf "\r      ${CYAN}%s%s${NC} %3d%%" "$bar_filled" "$bar_empty" "$percent" >&4
 }
 
 # Unbuffered sed for real-time progress parsing
@@ -167,12 +167,9 @@ print_completion() {
     echo ""
     echo -e "  ${BOLD}moru${NC} ${MUTED}v${version}${NC} installed to ${MUTED}${DEST}${NC}"
     echo ""
-    echo -e "${MUTED}To get started:${NC}"
+    echo -e "  Run ${CYAN}${BOLD}moru auth login${NC} to get started."
     echo ""
-    echo -e "  ${BOLD}moru --help${NC}       ${MUTED}# Show available commands${NC}"
-    echo -e "  ${BOLD}moru auth login${NC}   ${MUTED}# Authenticate with your account${NC}"
-    echo ""
-    echo -e "${MUTED}Documentation:${NC} https://moru.io/docs"
+    echo -e "  ${MUTED}Documentation: https://moru.io/docs${NC}"
     echo ""
 }
 
