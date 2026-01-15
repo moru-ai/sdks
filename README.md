@@ -17,37 +17,64 @@ Moru provides isolated VMs for AI agents to run commands, write files, and execu
 
 ## Quick Start
 
-### 1. Create an Account
+### Install
 
-Sign up for a free account at [moru.io/dashboard](https://moru.io/dashboard).
+```bash
+curl -fsSL https://moru.io/cli/install.sh | bash
+```
 
-### 2. Get Your API Key
+### Login
 
-1. Go to the [API Keys tab](https://moru.io/dashboard?tab=keys) in your dashboard
-2. Click **Create API Key**
-3. Copy your new API key
+```bash
+moru auth login
+```
 
-### 3. Install the SDK
+### Create Sandbox
+
+```bash
+moru sandbox run base echo 'hello world!'
+```
+
+### List Sandboxes
+
+```bash
+moru sandbox list
+```
+
+### View Logs
+
+```bash
+moru sandbox logs <id>
+```
+
+## Using SDKs
+
+### Install
 
 **JavaScript / TypeScript:**
+
 ```bash
 npm install @moru-ai/core
 ```
 
 **Python:**
+
 ```bash
 pip install moru
 ```
 
-### 4. Set Your API Key
+### API Key set up
 
 ```bash
 export MORU_API_KEY=your_api_key
 ```
 
-### 5. Create a Sandbox and Run Commands
+**Go to the [API Keys tab](https://moru.io/dashboard?tab=keys)** if you didn't create an API key yet.
+
+### Create a Sandbox and Run Commands
 
 **JavaScript / TypeScript:**
+
 ```ts
 import Sandbox from '@moru-ai/core'
 
@@ -64,6 +91,7 @@ await sandbox.kill()
 ```
 
 **Python:**
+
 ```python
 from moru import Sandbox
 
@@ -79,44 +107,9 @@ print(f"Output: {result.stdout}")
 sandbox.kill()
 ```
 
-### 6. View Sandbox Logs in the Dashboard
+### Monitor Sandbox Logs
 
 After running your sandbox, you can view logs, monitor activity, and debug issues from the [Sandboxes tab](https://moru.io/dashboard?tab=sandboxes) in your dashboard.
-
-## CLI Quick Start
-
-You can also use the Moru CLI to create and manage sandboxes directly from your terminal.
-
-### Install CLI
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/moru-ai/moru/main/install.sh | bash
-```
-
-### Login
-
-```bash
-moru auth login
-```
-
-### Create Sandbox and Run Command
-
-```bash
-# Run a command in an ephemeral sandbox (creates, executes, destroys)
-moru sandbox run base echo "Hello from Moru!"
-```
-
-### List Sandboxes
-
-```bash
-moru sandbox list
-```
-
-### View Logs
-
-```bash
-moru sandbox logs <id>
-```
 
 ## Using a Custom Template
 
@@ -129,16 +122,8 @@ sandbox = Sandbox.create("my-template")
 
 ```ts
 // JavaScript
-const sandbox = await Sandbox.create("my-template")
+const sandbox = await Sandbox.create('my-template')
 ```
-
-## Packages
-
-This monorepo contains:
-
-- `packages/js-sdk` - JavaScript/TypeScript SDK
-- `packages/python-sdk` - Python SDK
-- `packages/cli` - Command-line interface
 
 ## Documentation
 
@@ -146,7 +131,7 @@ For more information, visit [moru.io/docs](https://moru.io/docs).
 
 ## Examples
 
-- [Maru](https://github.com/moru-ai/maru) - General purpose AI agent using Claude Agent SDK and Moru
+- [Maru](https://github.com/moru-ai/maru) - A research assistant using Claude Agent SDK and Moru
 
 ## Related Repositories
 
