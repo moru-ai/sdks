@@ -6,6 +6,8 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.error import Error
+from ...models.logs_direction import LogsDirection
+from ...models.sandbox_log_event_type import SandboxLogEventType
 from ...models.sandbox_logs import SandboxLogs
 from ...types import UNSET, Response, Unset
 
@@ -13,14 +15,28 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     sandbox_id: str,
     *,
-    start: Union[Unset, int] = UNSET,
-    limit: Union[Unset, int] = 1000,
+    cursor: Union[Unset, int] = UNSET,
+    limit: Union[Unset, int] = 100,
+    direction: Union[Unset, LogsDirection] = UNSET,
+    event_type: Union[Unset, SandboxLogEventType] = UNSET,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
-    params["start"] = start
+    params["cursor"] = cursor
 
     params["limit"] = limit
+
+    json_direction: Union[Unset, str] = UNSET
+    if not isinstance(direction, Unset):
+        json_direction = direction.value
+
+    params["direction"] = json_direction
+
+    json_event_type: Union[Unset, str] = UNSET
+    if not isinstance(event_type, Unset):
+        json_event_type = event_type.value
+
+    params["eventType"] = json_event_type
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -40,18 +56,22 @@ def _parse_response(
         response_200 = SandboxLogs.from_dict(response.json())
 
         return response_200
+
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
         return response_401
+
     if response.status_code == 404:
         response_404 = Error.from_dict(response.json())
 
         return response_404
+
     if response.status_code == 500:
         response_500 = Error.from_dict(response.json())
 
         return response_500
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -73,15 +93,19 @@ def sync_detailed(
     sandbox_id: str,
     *,
     client: AuthenticatedClient,
-    start: Union[Unset, int] = UNSET,
-    limit: Union[Unset, int] = 1000,
+    cursor: Union[Unset, int] = UNSET,
+    limit: Union[Unset, int] = 100,
+    direction: Union[Unset, LogsDirection] = UNSET,
+    event_type: Union[Unset, SandboxLogEventType] = UNSET,
 ) -> Response[Union[Error, SandboxLogs]]:
     """Get sandbox logs
 
     Args:
         sandbox_id (str):
-        start (Union[Unset, int]):
-        limit (Union[Unset, int]):  Default: 1000.
+        cursor (Union[Unset, int]):
+        limit (Union[Unset, int]):  Default: 100.
+        direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
+        event_type (Union[Unset, SandboxLogEventType]): Type of sandbox log event
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -93,8 +117,10 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         sandbox_id=sandbox_id,
-        start=start,
+        cursor=cursor,
         limit=limit,
+        direction=direction,
+        event_type=event_type,
     )
 
     response = client.get_httpx_client().request(
@@ -108,15 +134,19 @@ def sync(
     sandbox_id: str,
     *,
     client: AuthenticatedClient,
-    start: Union[Unset, int] = UNSET,
-    limit: Union[Unset, int] = 1000,
+    cursor: Union[Unset, int] = UNSET,
+    limit: Union[Unset, int] = 100,
+    direction: Union[Unset, LogsDirection] = UNSET,
+    event_type: Union[Unset, SandboxLogEventType] = UNSET,
 ) -> Optional[Union[Error, SandboxLogs]]:
     """Get sandbox logs
 
     Args:
         sandbox_id (str):
-        start (Union[Unset, int]):
-        limit (Union[Unset, int]):  Default: 1000.
+        cursor (Union[Unset, int]):
+        limit (Union[Unset, int]):  Default: 100.
+        direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
+        event_type (Union[Unset, SandboxLogEventType]): Type of sandbox log event
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -129,8 +159,10 @@ def sync(
     return sync_detailed(
         sandbox_id=sandbox_id,
         client=client,
-        start=start,
+        cursor=cursor,
         limit=limit,
+        direction=direction,
+        event_type=event_type,
     ).parsed
 
 
@@ -138,15 +170,19 @@ async def asyncio_detailed(
     sandbox_id: str,
     *,
     client: AuthenticatedClient,
-    start: Union[Unset, int] = UNSET,
-    limit: Union[Unset, int] = 1000,
+    cursor: Union[Unset, int] = UNSET,
+    limit: Union[Unset, int] = 100,
+    direction: Union[Unset, LogsDirection] = UNSET,
+    event_type: Union[Unset, SandboxLogEventType] = UNSET,
 ) -> Response[Union[Error, SandboxLogs]]:
     """Get sandbox logs
 
     Args:
         sandbox_id (str):
-        start (Union[Unset, int]):
-        limit (Union[Unset, int]):  Default: 1000.
+        cursor (Union[Unset, int]):
+        limit (Union[Unset, int]):  Default: 100.
+        direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
+        event_type (Union[Unset, SandboxLogEventType]): Type of sandbox log event
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -158,8 +194,10 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         sandbox_id=sandbox_id,
-        start=start,
+        cursor=cursor,
         limit=limit,
+        direction=direction,
+        event_type=event_type,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -171,15 +209,19 @@ async def asyncio(
     sandbox_id: str,
     *,
     client: AuthenticatedClient,
-    start: Union[Unset, int] = UNSET,
-    limit: Union[Unset, int] = 1000,
+    cursor: Union[Unset, int] = UNSET,
+    limit: Union[Unset, int] = 100,
+    direction: Union[Unset, LogsDirection] = UNSET,
+    event_type: Union[Unset, SandboxLogEventType] = UNSET,
 ) -> Optional[Union[Error, SandboxLogs]]:
     """Get sandbox logs
 
     Args:
         sandbox_id (str):
-        start (Union[Unset, int]):
-        limit (Union[Unset, int]):  Default: 1000.
+        cursor (Union[Unset, int]):
+        limit (Union[Unset, int]):  Default: 100.
+        direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
+        event_type (Union[Unset, SandboxLogEventType]): Type of sandbox log event
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -193,7 +235,9 @@ async def asyncio(
         await asyncio_detailed(
             sandbox_id=sandbox_id,
             client=client,
-            start=start,
+            cursor=cursor,
             limit=limit,
+            direction=direction,
+            event_type=event_type,
         )
     ).parsed

@@ -6,36 +6,37 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.error import Error
-from ...models.log_level import LogLevel
-from ...models.template_build_info import TemplateBuildInfo
+from ...models.sandbox_run import SandboxRun
+from ...models.sandbox_run_status import SandboxRunStatus
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
-    template_id: str,
-    build_id: str,
     *,
-    logs_offset: Union[Unset, int] = 0,
+    status: Union[Unset, list[SandboxRunStatus]] = UNSET,
+    next_token: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = 100,
-    level: Union[Unset, LogLevel] = UNSET,
 ) -> dict[str, Any]:
     params: dict[str, Any] = {}
 
-    params["logsOffset"] = logs_offset
+    json_status: Union[Unset, list[str]] = UNSET
+    if not isinstance(status, Unset):
+        json_status = []
+        for status_item_data in status:
+            status_item = status_item_data.value
+            json_status.append(status_item)
+
+    params["status"] = json_status
+
+    params["nextToken"] = next_token
 
     params["limit"] = limit
-
-    json_level: Union[Unset, str] = UNSET
-    if not isinstance(level, Unset):
-        json_level = level.value
-
-    params["level"] = json_level
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/templates/{template_id}/builds/{build_id}/status",
+        "url": "/v2/sandbox-runs",
         "params": params,
     }
 
@@ -44,21 +45,26 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[Error, TemplateBuildInfo]]:
+) -> Optional[Union[Error, list["SandboxRun"]]]:
     if response.status_code == 200:
-        response_200 = TemplateBuildInfo.from_dict(response.json())
+        response_200 = []
+        _response_200 = response.json()
+        for response_200_item_data in _response_200:
+            response_200_item = SandboxRun.from_dict(response_200_item_data)
+
+            response_200.append(response_200_item)
 
         return response_200
+
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
 
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
         return response_401
-
-    if response.status_code == 404:
-        response_404 = Error.from_dict(response.json())
-
-        return response_404
 
     if response.status_code == 500:
         response_500 = Error.from_dict(response.json())
@@ -73,7 +79,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[Error, TemplateBuildInfo]]:
+) -> Response[Union[Error, list["SandboxRun"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -83,37 +89,31 @@ def _build_response(
 
 
 def sync_detailed(
-    template_id: str,
-    build_id: str,
     *,
     client: AuthenticatedClient,
-    logs_offset: Union[Unset, int] = 0,
+    status: Union[Unset, list[SandboxRunStatus]] = UNSET,
+    next_token: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = 100,
-    level: Union[Unset, LogLevel] = UNSET,
-) -> Response[Union[Error, TemplateBuildInfo]]:
-    """Get template build info
+) -> Response[Union[Error, list["SandboxRun"]]]:
+    """List sandbox runs (including stopped/historical)
 
     Args:
-        template_id (str):
-        build_id (str):
-        logs_offset (Union[Unset, int]):  Default: 0.
+        status (Union[Unset, list[SandboxRunStatus]]):
+        next_token (Union[Unset, str]):
         limit (Union[Unset, int]):  Default: 100.
-        level (Union[Unset, LogLevel]): Log level for build logs
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Error, TemplateBuildInfo]]
+        Response[Union[Error, list['SandboxRun']]]
     """
 
     kwargs = _get_kwargs(
-        template_id=template_id,
-        build_id=build_id,
-        logs_offset=logs_offset,
+        status=status,
+        next_token=next_token,
         limit=limit,
-        level=level,
     )
 
     response = client.get_httpx_client().request(
@@ -124,73 +124,61 @@ def sync_detailed(
 
 
 def sync(
-    template_id: str,
-    build_id: str,
     *,
     client: AuthenticatedClient,
-    logs_offset: Union[Unset, int] = 0,
+    status: Union[Unset, list[SandboxRunStatus]] = UNSET,
+    next_token: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = 100,
-    level: Union[Unset, LogLevel] = UNSET,
-) -> Optional[Union[Error, TemplateBuildInfo]]:
-    """Get template build info
+) -> Optional[Union[Error, list["SandboxRun"]]]:
+    """List sandbox runs (including stopped/historical)
 
     Args:
-        template_id (str):
-        build_id (str):
-        logs_offset (Union[Unset, int]):  Default: 0.
+        status (Union[Unset, list[SandboxRunStatus]]):
+        next_token (Union[Unset, str]):
         limit (Union[Unset, int]):  Default: 100.
-        level (Union[Unset, LogLevel]): Log level for build logs
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Error, TemplateBuildInfo]
+        Union[Error, list['SandboxRun']]
     """
 
     return sync_detailed(
-        template_id=template_id,
-        build_id=build_id,
         client=client,
-        logs_offset=logs_offset,
+        status=status,
+        next_token=next_token,
         limit=limit,
-        level=level,
     ).parsed
 
 
 async def asyncio_detailed(
-    template_id: str,
-    build_id: str,
     *,
     client: AuthenticatedClient,
-    logs_offset: Union[Unset, int] = 0,
+    status: Union[Unset, list[SandboxRunStatus]] = UNSET,
+    next_token: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = 100,
-    level: Union[Unset, LogLevel] = UNSET,
-) -> Response[Union[Error, TemplateBuildInfo]]:
-    """Get template build info
+) -> Response[Union[Error, list["SandboxRun"]]]:
+    """List sandbox runs (including stopped/historical)
 
     Args:
-        template_id (str):
-        build_id (str):
-        logs_offset (Union[Unset, int]):  Default: 0.
+        status (Union[Unset, list[SandboxRunStatus]]):
+        next_token (Union[Unset, str]):
         limit (Union[Unset, int]):  Default: 100.
-        level (Union[Unset, LogLevel]): Log level for build logs
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Error, TemplateBuildInfo]]
+        Response[Union[Error, list['SandboxRun']]]
     """
 
     kwargs = _get_kwargs(
-        template_id=template_id,
-        build_id=build_id,
-        logs_offset=logs_offset,
+        status=status,
+        next_token=next_token,
         limit=limit,
-        level=level,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -199,38 +187,32 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    template_id: str,
-    build_id: str,
     *,
     client: AuthenticatedClient,
-    logs_offset: Union[Unset, int] = 0,
+    status: Union[Unset, list[SandboxRunStatus]] = UNSET,
+    next_token: Union[Unset, str] = UNSET,
     limit: Union[Unset, int] = 100,
-    level: Union[Unset, LogLevel] = UNSET,
-) -> Optional[Union[Error, TemplateBuildInfo]]:
-    """Get template build info
+) -> Optional[Union[Error, list["SandboxRun"]]]:
+    """List sandbox runs (including stopped/historical)
 
     Args:
-        template_id (str):
-        build_id (str):
-        logs_offset (Union[Unset, int]):  Default: 0.
+        status (Union[Unset, list[SandboxRunStatus]]):
+        next_token (Union[Unset, str]):
         limit (Union[Unset, int]):  Default: 100.
-        level (Union[Unset, LogLevel]): Log level for build logs
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Error, TemplateBuildInfo]
+        Union[Error, list['SandboxRun']]
     """
 
     return (
         await asyncio_detailed(
-            template_id=template_id,
-            build_id=build_id,
             client=client,
-            logs_offset=logs_offset,
+            status=status,
+            next_token=next_token,
             limit=limit,
-            level=level,
         )
     ).parsed

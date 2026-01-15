@@ -65,18 +65,22 @@ def _parse_response(
         response_200 = TemplateBuildLogsResponse.from_dict(response.json())
 
         return response_200
+
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
         return response_401
+
     if response.status_code == 404:
         response_404 = Error.from_dict(response.json())
 
         return response_404
+
     if response.status_code == 500:
         response_500 = Error.from_dict(response.json())
 
         return response_500
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -113,7 +117,7 @@ def sync_detailed(
         cursor (Union[Unset, int]):
         limit (Union[Unset, int]):  Default: 100.
         direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
-        level (Union[Unset, LogLevel]): State of the sandbox
+        level (Union[Unset, LogLevel]): Log level for build logs
         source (Union[Unset, LogsSource]): Source of the logs that should be returned
 
     Raises:
@@ -160,7 +164,7 @@ def sync(
         cursor (Union[Unset, int]):
         limit (Union[Unset, int]):  Default: 100.
         direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
-        level (Union[Unset, LogLevel]): State of the sandbox
+        level (Union[Unset, LogLevel]): Log level for build logs
         source (Union[Unset, LogsSource]): Source of the logs that should be returned
 
     Raises:
@@ -202,7 +206,7 @@ async def asyncio_detailed(
         cursor (Union[Unset, int]):
         limit (Union[Unset, int]):  Default: 100.
         direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
-        level (Union[Unset, LogLevel]): State of the sandbox
+        level (Union[Unset, LogLevel]): Log level for build logs
         source (Union[Unset, LogsSource]): Source of the logs that should be returned
 
     Raises:
@@ -247,7 +251,7 @@ async def asyncio(
         cursor (Union[Unset, int]):
         limit (Union[Unset, int]):  Default: 100.
         direction (Union[Unset, LogsDirection]): Direction of the logs that should be returned
-        level (Union[Unset, LogLevel]): State of the sandbox
+        level (Union[Unset, LogLevel]): Log level for build logs
         source (Union[Unset, LogsSource]): Source of the logs that should be returned
 
     Raises:

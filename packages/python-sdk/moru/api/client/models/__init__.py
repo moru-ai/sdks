@@ -40,9 +40,13 @@ from .sandbox_detail import SandboxDetail
 from .sandbox_log import SandboxLog
 from .sandbox_log_entry import SandboxLogEntry
 from .sandbox_log_entry_fields import SandboxLogEntryFields
+from .sandbox_log_event_type import SandboxLogEventType
 from .sandbox_logs import SandboxLogs
 from .sandbox_metric import SandboxMetric
 from .sandbox_network_config import SandboxNetworkConfig
+from .sandbox_run import SandboxRun
+from .sandbox_run_end_reason import SandboxRunEndReason
+from .sandbox_run_status import SandboxRunStatus
 from .sandbox_state import SandboxState
 from .sandboxes_with_metrics import SandboxesWithMetrics
 from .team import Team
@@ -106,9 +110,13 @@ __all__ = (
     "SandboxLog",
     "SandboxLogEntry",
     "SandboxLogEntryFields",
+    "SandboxLogEventType",
     "SandboxLogs",
     "SandboxMetric",
     "SandboxNetworkConfig",
+    "SandboxRun",
+    "SandboxRunEndReason",
+    "SandboxRunStatus",
     "SandboxState",
     "Team",
     "TeamAPIKey",

@@ -16,7 +16,7 @@ T = TypeVar("T", bound="BuildLogEntry")
 class BuildLogEntry:
     """
     Attributes:
-        level (LogLevel): State of the sandbox
+        level (LogLevel): Log level for build logs
         message (str): Log message content
         timestamp (datetime.datetime): Timestamp of the log entry
         step (Union[Unset, str]): Step in the build process related to the log entry

@@ -6,7 +6,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.log_level import LogLevel
+from ..models.sandbox_log_event_type import SandboxLogEventType
 
 if TYPE_CHECKING:
     from ..models.sandbox_log_entry_fields import SandboxLogEntryFields
@@ -19,22 +19,22 @@ T = TypeVar("T", bound="SandboxLogEntry")
 class SandboxLogEntry:
     """
     Attributes:
+        event_type (SandboxLogEventType): Type of sandbox log event
         fields (SandboxLogEntryFields):
-        level (LogLevel): State of the sandbox
         message (str): Log message content
         timestamp (datetime.datetime): Timestamp of the log entry
     """
 
+    event_type: SandboxLogEventType
     fields: "SandboxLogEntryFields"
-    level: LogLevel
     message: str
     timestamp: datetime.datetime
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        fields = self.fields.to_dict()
+        event_type = self.event_type.value
 
-        level = self.level.value
+        fields = self.fields.to_dict()
 
         message = self.message
 
@@ -44,8 +44,8 @@ class SandboxLogEntry:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "eventType": event_type,
                 "fields": fields,
-                "level": level,
                 "message": message,
                 "timestamp": timestamp,
             }
@@ -58,17 +58,17 @@ class SandboxLogEntry:
         from ..models.sandbox_log_entry_fields import SandboxLogEntryFields
 
         d = dict(src_dict)
-        fields = SandboxLogEntryFields.from_dict(d.pop("fields"))
+        event_type = SandboxLogEventType(d.pop("eventType"))
 
-        level = LogLevel(d.pop("level"))
+        fields = SandboxLogEntryFields.from_dict(d.pop("fields"))
 
         message = d.pop("message")
 
         timestamp = isoparse(d.pop("timestamp"))
 
         sandbox_log_entry = cls(
+            event_type=event_type,
             fields=fields,
-            level=level,
             message=message,
             timestamp=timestamp,
         )
