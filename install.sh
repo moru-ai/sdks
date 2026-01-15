@@ -192,20 +192,8 @@ download_file() {
         return
     fi
 
-    # Start spinner immediately for visual feedback
+    # Start spinner for visual feedback during download
     start_spinner "$message"
-
-    # Try advanced progress bar in TTY environment
-    if [[ -t 1 ]]; then
-        spinner_done  # Clear spinner before showing progress bar
-        if download_with_progress "$url" "$output" 2>/dev/null; then
-            return
-        fi
-        # Progress bar failed, restart spinner
-        start_spinner "$message"
-    fi
-
-    # Download with spinner
     if curl -fsSL -o "$output" "$url"; then
         stop_spinner
     else
