@@ -3,7 +3,7 @@ import * as moru from '@moru-ai/core'
 import * as chalk from 'chalk'
 
 import { client, connectionConfig } from 'src/api'
-import { asBold, withUnderline } from 'src/utils/format'
+import { asBold } from 'src/utils/format'
 import { wait } from 'src/utils/wait'
 import { handleMoruRequestError } from '../../utils/errors'
 import { waitForSandboxEnd, formatEnum, Format, isRunning } from './utils'
@@ -67,9 +67,6 @@ export const logsCommand = new commander.Command('logs')
         let isFirstRun = true
         let firstLogsPrinted = false
 
-        if (format === Format.PRETTY) {
-          console.log(`\nLogs for sandbox ${asBold(sandboxID)}:`)
-        }
 
         // Convert type filter to API eventType parameter
         const eventType: SandboxLogEventType | undefined =
@@ -94,24 +91,10 @@ export const logsCommand = new commander.Command('logs')
           const isSandboxRunning = await isRunning(sandboxID)
 
           if (!isSandboxRunning && logs.length === 0 && isFirstRun) {
-            if (format === Format.PRETTY) {
-              console.log(
-                `\nStopped printing logs — sandbox ${withUnderline(
-                  'not found'
-                )}`
-              )
-            }
             break
           }
 
           if (!isSandboxRunning) {
-            if (format === Format.PRETTY) {
-              console.log(
-                `\nStopped printing logs — sandbox is ${withUnderline(
-                  'closed'
-                )}`
-              )
-            }
             break
           }
 

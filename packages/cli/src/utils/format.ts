@@ -113,6 +113,10 @@ export function asPython(code: string) {
   return highlight.default(code, { language: 'python', ignoreIllegals: true })
 }
 
+export function asBash(code: string) {
+  return highlight.default(code, { language: 'bash', ignoreIllegals: true })
+}
+
 export const borderStyle = {
   topLeft: '',
   topRight: '',

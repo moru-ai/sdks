@@ -5,7 +5,7 @@ import fs from 'fs'
 
 import { ensureAPIKey } from 'src/api'
 import { spawnConnectedTerminal } from 'src/terminal'
-import { asBold, asFormattedSandboxTemplate, asPrimary } from 'src/utils/format'
+import { asBold, asDim, asFormattedSandboxTemplate, asPrimary } from 'src/utils/format'
 import { getRoot } from '../../utils/filesystem'
 import { getConfigPath, loadConfig } from '../../config'
 import { configOption, pathOption } from '../../options'
@@ -111,6 +111,7 @@ export const runCommand = new commander.Command('run')
           // Always destroy the sandbox (ephemeral)
           await sandbox.kill()
           console.log(`Sandbox ${asPrimary(sandbox.sandboxId)} destroyed`)
+          console.log(`\n${asDim('View logs:')} ${asPrimary(`moru sandbox logs ${sandbox.sandboxId}`)}`)
         }
 
         process.exit(process.exitCode ?? 0)

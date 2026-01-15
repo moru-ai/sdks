@@ -13,7 +13,7 @@ import {
   USER_CONFIG_PATH,
   UserConfig,
 } from 'src/user'
-import { asBold, asFormattedConfig, asFormattedError } from 'src/utils/format'
+import { asBold, asDim, asPrimary, asFormattedConfig, asFormattedError } from 'src/utils/format'
 import { connectionConfig } from 'src/api'
 import { handleMoruRequestError } from '../../utils/errors'
 
@@ -79,8 +79,10 @@ export const loginCommand = new commander.Command('login')
     console.log(
       `Logged in as ${asBold(userConfig.email)} with selected team ${asBold(
         userConfig.teamName
-      )}`
+      )}\n`
     )
+    console.log(asDim('Try running:'))
+    console.log(`  ${asPrimary("moru sandbox run base echo 'hello world!'")}\n`)
     process.exit(0)
   })
 
