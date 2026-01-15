@@ -23,27 +23,17 @@ Moru provides isolated VMs for AI agents to run commands, write files, and execu
 curl -fsSL https://moru.io/cli/install.sh | bash
 ```
 
-### Login
-
 ```bash
+# Login
 moru auth login
-```
 
-### Create Sandbox
-
-```bash
+# Run a command in ephemeral sandbox
 moru sandbox run base echo 'hello world!'
-```
 
-### List Sandboxes
-
-```bash
+# List sandboxes
 moru sandbox list
-```
 
-### View Logs
-
-```bash
+# View logs
 moru sandbox logs <id>
 ```
 
